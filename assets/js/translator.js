@@ -581,7 +581,7 @@ function translateText() {
             }
             request.q = $('#originalText').val(); // eslint-disable-line id-length
             request.markUnknown = $('#markUnknown').prop('checked') ? 'yes' : 'no';
-            textTranslateRequest = $.jsonp({
+            textTranslateRequest = $.ajax({
                 url: config.APY_URL + endpoint,
                 beforeSend: ajaxSend,
                 complete: function () {
@@ -589,6 +589,9 @@ function translateText() {
                     textTranslateRequest = undefined;
                 },
                 data: request,
+                type: 'POST',
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: 'json',
                 success: function (data) {
                     if(data.responseStatus === HTTP_OK_CODE) {
                         $('#translatedText').val(data.responseData.translatedText);
@@ -740,7 +743,7 @@ function detectLanguage() {
         textTranslateRequest.abort();
     }
 
-    textTranslateRequest = $.jsonp({
+    textTranslateRequest = $.ajax({
         url: config.APY_URL + '/identifyLang',
         beforeSend: ajaxSend,
         complete: function () {
@@ -750,6 +753,9 @@ function detectLanguage() {
         data: {
             'q': $('#originalText').val()
         },
+        type: 'POST',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        dataType: 'json',
         success: function (data) {
             var possibleLanguages = [];
             for(var lang in data) {
