@@ -132,7 +132,7 @@ if(modeEnabled('translation')) {
 
             synchronizeTextareaHeights();
         });
-
+        
         $('#originalText').blur(function () {
             persistChoices('translator', true);
         });
